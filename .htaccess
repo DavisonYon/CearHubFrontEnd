@@ -1,0 +1,21 @@
+RewriteEngine On
+RewriteBase /cear/v2/
+
+# Explicitly rewrite /admin/add to add.php
+RewriteRule ^admin/add$ admin/add.php [L]
+RewriteRule ^admin/auth$ admin/auth.php [L]
+RewriteRule ^admin/api$ admin/api.php [L]
+RewriteRule ^admin/logout$ admin/logout.php [L]
+
+RewriteRule ^delete$ delete.php [L]
+
+
+# Rule for /admin - must be above the general rule
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^admin/(.+)$ admin/index.php?location=$1 [L,QSA]
+
+# General rule - applies if not already matched by /admin rule
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ index.php?location=$1 [L,QSA]
